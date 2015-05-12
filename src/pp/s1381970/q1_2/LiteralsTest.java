@@ -2,6 +2,8 @@ package pp.s1381970.q1_2;
 
 import org.junit.Test;
 
+import pp.s1381970.LexerTester;
+
 public class LiteralsTest {
 
 	private static LexerTester tester = new LexerTester(Literals.class);

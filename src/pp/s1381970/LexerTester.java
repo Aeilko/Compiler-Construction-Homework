@@ -1,4 +1,4 @@
-package pp.s1381970.q1_2;
+package pp.s1381970;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
