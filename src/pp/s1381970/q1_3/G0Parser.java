@@ -17,9 +17,10 @@ public class G0Parser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__6=1, T__5=2, T__4=3, T__3=4, T__2=5, T__1=6, T__0=7, ID=8, NUM=9;
+		T__6=1, T__5=2, T__4=3, T__3=4, T__2=5, T__1=6, T__0=7, ID=8, NUM=9, WS=10;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'('", "')'", "'['", "'+'", "']'", "'-'", "'.'", "ID", "NUM"
+		"<INVALID>", "'('", "')'", "'['", "'+'", "']'", "'-'", "'.'", "ID", "NUM", 
+		"WS"
 	};
 	public static final int
 		RULE_e = 0, RULE_f = 1, RULE_g = 2, RULE_a = 3;
@@ -360,7 +361,7 @@ public class G0Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\66\4\2\t\2\4\3"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f\66\4\2\t\2\4\3"+
 		"\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\2\3\2\3\2\7\2\21\n\2\f\2\16\2\24\13"+
 		"\2\3\3\3\3\3\3\3\3\3\3\5\3\33\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\5\4\'\n\4\7\4)\n\4\f\4\16\4,\13\4\3\5\3\5\3\5\3\5\3\5\3\5\5\5\64"+
