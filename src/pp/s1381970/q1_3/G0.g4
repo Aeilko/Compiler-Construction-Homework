@@ -13,7 +13,7 @@ a	: '(' e ')'
 	| ID;
 
 
-ID	: [0-9];
-NUM	: [0-9a-zA-Z];
+ID	: [0-9a-zA-Z]+;
+NUM	: [0-9]+;
 
 WS : [ /t/r/n] -> skip;
