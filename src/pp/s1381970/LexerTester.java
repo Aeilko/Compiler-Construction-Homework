@@ -113,6 +113,8 @@ public class LexerTester {
 
 	/** Exception signalling a failed attempt to scan a text. */
 	public static class LexerException extends Exception {
+		private static final long serialVersionUID = 4289928328510369023L;
+
 		public LexerException(String message) {
 			super(message);
 		}
