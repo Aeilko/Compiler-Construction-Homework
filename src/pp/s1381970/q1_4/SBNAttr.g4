@@ -3,8 +3,7 @@ grammar SBNAttr;
 import SBNVocab;
 
 number returns [int val]
-		: {$s.negative = false; $l.position=0; }
-		  s=sign l=list
+		: s=sign l=list[0]
 		  { $val=($s.negative ? $l.val*(-1) : $l.val); }
 		;
 sign returns [boolean negative]
@@ -13,19 +12,17 @@ sign returns [boolean negative]
 		| MIN
 		  {$negative = true; }
 		;
-list returns [int val, int position]
-		: {$b.position = $position; $l.position = $position+1; }
-		  b=bit l=list
+list [int pos] returns [int val]
+		: b=bit[$pos] l=list[$pos+1]
 		  {$val = $l.val + $b.val; }
-		| {$b.position = $position; }
-		  b=bit
+		| b=bit[$pos]
 		  {$val = $b.val; }
 		;
-bit returns [int val, int position]
+bit [int pos] returns [int val]
 		: ZERO
-		  {$val = (int) Math.pow(2, $position); }
-		| ONE
 		  {$val = 0; }
+		| ONE
+		  {$val = (int) Math.pow(2, $pos); }
 		;
 
 WS : [ \t\r\n]+ -> skip ;
