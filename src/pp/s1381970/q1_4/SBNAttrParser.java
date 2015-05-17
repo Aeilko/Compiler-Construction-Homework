@@ -76,7 +76,7 @@ public class SBNAttrParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			((NumberContext)_localctx).l.position=0; 
+			((NumberContext)_localctx).s.negative = false; ((NumberContext)_localctx).l.position=0; 
 			setState(9); ((NumberContext)_localctx).s = sign();
 			setState(10); ((NumberContext)_localctx).l = list();
 			 ((NumberContext)_localctx).val = (((NumberContext)_localctx).s.negative ? ((NumberContext)_localctx).l.val*(-1) : ((NumberContext)_localctx).l.val); 

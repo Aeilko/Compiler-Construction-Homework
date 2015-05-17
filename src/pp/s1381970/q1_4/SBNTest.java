@@ -17,27 +17,41 @@ public class SBNTest {
 
 	@Test
 	public void test() {
-		test(0, "+0");
-		test(10, "+0101");
-		test(15, "+1111");
-		test(-10, "-0101");
-		test(-15, "-1111");
+		// In the attribute grammar the most significant bit is the rightmost
+		testAttribute(0, "+0");
+		testAttribute(10, "+0101");
+		testAttribute(15, "+1111");
+		testAttribute(-10, "-0101");
+		testAttribute(-15, "-1111");
+		// In the listener grammar the most significant bit is the leftmost, as it should be.
+		testListener(0, "+0");
+		testListener(10, "+1010");
+		testListener(15, "+1111");
+		testListener(-10, "-1010");
+		testListener(-15, "-1111");
 	}
 	
-	public void test(int expected, String in){
+	public void testAttribute(int expected, String in){
 		assertEquals(expected, parseSBNAttr(in).val);
 	}
 	
-	/*private final ParseTreeWalker walker = new ParseTreeWalker();
-	private final TGrammarListenerImp tGram = new TGrammarListenerImp();
+	public void testListener(int expected, String in){
+		ParseTree tree = parseSBN(in);
+		SBN.init();
+		walker.walk(SBN, tree);
+		assertEquals(expected, SBN.val(tree));
+	}
+	
+	private final ParseTreeWalker walker = new ParseTreeWalker();
+	private final SBNListenerImp SBN = new SBNListenerImp();
 
-	private ParseTree parseTGrammar(String text) {
+	private ParseTree parseSBN(String text) {
 		CharStream chars = new ANTLRInputStream(text);
-		Lexer lexer = new TGrammarLexer(chars);
+		Lexer lexer = new SBNLexer(chars);
 		TokenStream tokens = new CommonTokenStream(lexer);
-		TGrammarParser parser = new TGrammarParser(tokens);
-		return parser.t();
-	}*/
+		SBNParser parser = new SBNParser(tokens);
+		return parser.number();
+	}
 
 	private NumberContext parseSBNAttr(String text) {
 		CharStream chars = new ANTLRInputStream(text);

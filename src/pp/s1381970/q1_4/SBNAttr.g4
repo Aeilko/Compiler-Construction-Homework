@@ -3,7 +3,7 @@ grammar SBNAttr;
 import SBNVocab;
 
 number returns [int val]
-		: {$l.position=0; }
+		: {$s.negative = false; $l.position=0; }
 		  s=sign l=list
 		  { $val=($s.negative ? $l.val*(-1) : $l.val); }
 		;
