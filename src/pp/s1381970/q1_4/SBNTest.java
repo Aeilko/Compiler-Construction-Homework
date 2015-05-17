@@ -23,12 +23,14 @@ public class SBNTest {
 		testAttribute(15, "+1111");
 		testAttribute(-10, "-0101");
 		testAttribute(-15, "-1111");
+		testAttribute(16, "+00001000000");
 		// In the listener grammar the most significant bit is the leftmost, as it should be.
 		testListener(0, "+0");
 		testListener(10, "+1010");
 		testListener(15, "+1111");
 		testListener(-10, "-1010");
 		testListener(-15, "-1111");
+		testListener(64, "+00001000000");
 	}
 	
 	public void testAttribute(int expected, String in){

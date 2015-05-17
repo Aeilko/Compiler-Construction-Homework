@@ -76,9 +76,8 @@ public class SBNAttrParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			((NumberContext)_localctx).s.negative = false; ((NumberContext)_localctx).l.position=0; 
-			setState(9); ((NumberContext)_localctx).s = sign();
-			setState(10); ((NumberContext)_localctx).l = list();
+			setState(8); ((NumberContext)_localctx).s = sign();
+			setState(9); ((NumberContext)_localctx).l = list(0);
 			 ((NumberContext)_localctx).val = (((NumberContext)_localctx).s.negative ? ((NumberContext)_localctx).l.val*(-1) : ((NumberContext)_localctx).l.val); 
 			}
 		}
@@ -115,19 +114,19 @@ public class SBNAttrParser extends Parser {
 		SignContext _localctx = new SignContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_sign);
 		try {
-			setState(17);
+			setState(16);
 			switch (_input.LA(1)) {
 			case PLUS:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(13); match(PLUS);
+				setState(12); match(PLUS);
 				((SignContext)_localctx).negative =  false; 
 				}
 				break;
 			case MIN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(15); match(MIN);
+				setState(14); match(MIN);
 				((SignContext)_localctx).negative =  true; 
 				}
 				break;
@@ -147,8 +146,8 @@ public class SBNAttrParser extends Parser {
 	}
 
 	public static class ListContext extends ParserRuleContext {
+		public int pos;
 		public int val;
-		public int position;
 		public BitContext b;
 		public ListContext l;
 		public BitContext bit() {
@@ -157,8 +156,10 @@ public class SBNAttrParser extends Parser {
 		public ListContext list() {
 			return getRuleContext(ListContext.class,0);
 		}
-		public ListContext(ParserRuleContext parent, int invokingState) {
+		public ListContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public ListContext(ParserRuleContext parent, int invokingState, int pos) {
 			super(parent, invokingState);
+			this.pos = pos;
 		}
 		@Override public int getRuleIndex() { return RULE_list; }
 		@Override
@@ -171,26 +172,24 @@ public class SBNAttrParser extends Parser {
 		}
 	}
 
-	public final ListContext list() throws RecognitionException {
-		ListContext _localctx = new ListContext(_ctx, getState());
+	public final ListContext list(int pos) throws RecognitionException {
+		ListContext _localctx = new ListContext(_ctx, getState(), pos);
 		enterRule(_localctx, 4, RULE_list);
 		try {
-			setState(28);
+			setState(25);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				((ListContext)_localctx).b.position = _localctx.position; ((ListContext)_localctx).l.position = _localctx.position+1; 
-				setState(20); ((ListContext)_localctx).b = bit();
-				setState(21); ((ListContext)_localctx).l = list();
+				setState(18); ((ListContext)_localctx).b = bit(_localctx.pos);
+				setState(19); ((ListContext)_localctx).l = list(_localctx.pos+1);
 				((ListContext)_localctx).val =  ((ListContext)_localctx).l.val + ((ListContext)_localctx).b.val; 
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				((ListContext)_localctx).b.position = _localctx.position; 
-				setState(25); ((ListContext)_localctx).b = bit();
+				setState(22); ((ListContext)_localctx).b = bit(_localctx.pos);
 				((ListContext)_localctx).val =  ((ListContext)_localctx).b.val; 
 				}
 				break;
@@ -208,12 +207,14 @@ public class SBNAttrParser extends Parser {
 	}
 
 	public static class BitContext extends ParserRuleContext {
+		public int pos;
 		public int val;
-		public int position;
 		public TerminalNode ZERO() { return getToken(SBNAttrParser.ZERO, 0); }
 		public TerminalNode ONE() { return getToken(SBNAttrParser.ONE, 0); }
-		public BitContext(ParserRuleContext parent, int invokingState) {
+		public BitContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public BitContext(ParserRuleContext parent, int invokingState, int pos) {
 			super(parent, invokingState);
+			this.pos = pos;
 		}
 		@Override public int getRuleIndex() { return RULE_bit; }
 		@Override
@@ -226,24 +227,24 @@ public class SBNAttrParser extends Parser {
 		}
 	}
 
-	public final BitContext bit() throws RecognitionException {
-		BitContext _localctx = new BitContext(_ctx, getState());
+	public final BitContext bit(int pos) throws RecognitionException {
+		BitContext _localctx = new BitContext(_ctx, getState(), pos);
 		enterRule(_localctx, 6, RULE_bit);
 		try {
-			setState(34);
+			setState(31);
 			switch (_input.LA(1)) {
 			case ZERO:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(30); match(ZERO);
-				((BitContext)_localctx).val =  (int) Math.pow(2, _localctx.position); 
+				setState(27); match(ZERO);
+				((BitContext)_localctx).val =  0; 
 				}
 				break;
 			case ONE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(32); match(ONE);
-				((BitContext)_localctx).val =  0; 
+				setState(29); match(ONE);
+				((BitContext)_localctx).val =  (int) Math.pow(2, _localctx.pos); 
 				}
 				break;
 			default:
@@ -262,16 +263,16 @@ public class SBNAttrParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\7\'\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3\24\n\3\3\4"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\37\n\4\3\5\3\5\3\5\3\5\5\5%\n\5\3"+
-		"\5\2\2\6\2\4\6\b\2\2%\2\n\3\2\2\2\4\23\3\2\2\2\6\36\3\2\2\2\b$\3\2\2\2"+
-		"\n\13\b\2\1\2\13\f\5\4\3\2\f\r\5\6\4\2\r\16\b\2\1\2\16\3\3\2\2\2\17\20"+
-		"\7\4\2\2\20\24\b\3\1\2\21\22\7\5\2\2\22\24\b\3\1\2\23\17\3\2\2\2\23\21"+
-		"\3\2\2\2\24\5\3\2\2\2\25\26\b\4\1\2\26\27\5\b\5\2\27\30\5\6\4\2\30\31"+
-		"\b\4\1\2\31\37\3\2\2\2\32\33\b\4\1\2\33\34\5\b\5\2\34\35\b\4\1\2\35\37"+
-		"\3\2\2\2\36\25\3\2\2\2\36\32\3\2\2\2\37\7\3\2\2\2 !\7\6\2\2!%\b\5\1\2"+
-		"\"#\7\7\2\2#%\b\5\1\2$ \3\2\2\2$\"\3\2\2\2%\t\3\2\2\2\5\23\36$";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\7$\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3\23\n\3\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\5\4\34\n\4\3\5\3\5\3\5\3\5\5\5\"\n\5\3\5\2\2\6\2"+
+		"\4\6\b\2\2\"\2\n\3\2\2\2\4\22\3\2\2\2\6\33\3\2\2\2\b!\3\2\2\2\n\13\5\4"+
+		"\3\2\13\f\5\6\4\2\f\r\b\2\1\2\r\3\3\2\2\2\16\17\7\4\2\2\17\23\b\3\1\2"+
+		"\20\21\7\5\2\2\21\23\b\3\1\2\22\16\3\2\2\2\22\20\3\2\2\2\23\5\3\2\2\2"+
+		"\24\25\5\b\5\2\25\26\5\6\4\2\26\27\b\4\1\2\27\34\3\2\2\2\30\31\5\b\5\2"+
+		"\31\32\b\4\1\2\32\34\3\2\2\2\33\24\3\2\2\2\33\30\3\2\2\2\34\7\3\2\2\2"+
+		"\35\36\7\6\2\2\36\"\b\5\1\2\37 \7\7\2\2 \"\b\5\1\2!\35\3\2\2\2!\37\3\2"+
+		"\2\2\"\t\3\2\2\2\5\22\33!";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
