@@ -1,0 +1,12 @@
+(   rhaegal: Dragon; jon: Snow; eddard: Stark;
+    (   viserion: Dragon; tywin: Lannister;
+        (   eddard: Dead;
+        )
+        viserion := rhaegal;
+        (   rhaegal := viserion;
+            jon: Stark; jon := eddard;
+        )
+        tyrion: Lannister; tyrion := tywin; tywin: Dead;
+        jon: Dead;
+    )
+)
