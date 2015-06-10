@@ -1,6 +1,6 @@
 grammar Fragment;
 
-@header{package pp.homework.q2_1;}
+//@header{package pp.homework.q2_1;}
 
 program: stat+ EOF;
 

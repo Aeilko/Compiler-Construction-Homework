@@ -1,6 +1,6 @@
 grammar Calc;
 
-@header{package pp.homework.q2_3;}
+//@header{package pp.homework.q2_3;}
 
 /** Complete expression. */
 complete
