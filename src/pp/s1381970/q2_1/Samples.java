@@ -1,4 +1,4 @@
-package pp.homework.q2_1;
+package pp.s1381970.q2_1;
 
 /** Example code snippets for control flow graph generation. */
 public class Samples {
