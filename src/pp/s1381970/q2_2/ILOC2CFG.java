@@ -27,12 +27,11 @@ public class ILOC2CFG {
 		if (args.length != 1) {
 			System.err.println("Usage: filename");
 		}
-		else{
-			try {
-				Program prog = Assembler.instance().assemble(new File(args[0]));
-				System.out.println(instance().convert(prog));
-			}
-			catch (FormatException | IOException exc) { exc.printStackTrace(); }
+		try {
+			Program prog = Assembler.instance().assemble(new File(args[0]));
+			System.out.println(instance().convert(prog));
+		} catch (FormatException | IOException exc) {
+			exc.printStackTrace();
 		}
 	}
 
@@ -40,7 +39,6 @@ public class ILOC2CFG {
 	private ILOC2CFG() {
 		// empty by design
 	}
-	
 	
 	
 	// My code

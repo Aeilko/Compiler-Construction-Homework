@@ -8,6 +8,8 @@ import java.util.List;
  * @author Arend Rensink
  */
 public class FormatException extends Exception {
+	private static final long serialVersionUID = 3908719003113286390L;
+
 	/** Constructs an exception without a message. */
 	public FormatException() {
 		// empty

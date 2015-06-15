@@ -1,6 +1,6 @@
 grammar Fragment;
 
-//@header{package pp.homework.q2_1;}
+@header{package pp.homework.q2_1;}
 
 program: stat+ EOF;
 
@@ -22,14 +22,14 @@ target
     | ID LSQ expr RSQ #arrayTarget
     ;
 
-expr: NOT expr                      #notExpr
+expr: expr DOT ID                   #fieldExpr
+    | NOT expr                      #notExpr
     | expr (PLUS | MINUS) expr      #addExpr
     | expr BIT_AND expr             #bitAndExpr
     | expr BIT_OR expr              #bitOrExpr
     | expr AND expr                 #andExpr
     | expr OR  expr                 #orExpr
     | expr (LT | GT | EQ | NE) expr #compExpr
-    | expr DOT ID                   #fieldExpr
     | LPAR expr RPAR                #parExpr
     | (NUM | TRUE | FALSE)          #constExpr
     | IN LPAR RPAR                  #inExpr

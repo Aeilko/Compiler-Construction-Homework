@@ -77,7 +77,7 @@ public class CalcCompiler extends CalcBaseListener {
 		new ParseTreeWalker().walk(this, tree);
 		return this.prog;
 	}
-
+	
 	/** Constructs an operation from the parameters 
 	 * and adds it to the program under construction. */
 	private Op emit(OpCode opCode, Operand... args) {

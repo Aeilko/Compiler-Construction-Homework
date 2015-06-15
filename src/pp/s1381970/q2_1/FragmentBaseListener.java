@@ -233,6 +233,18 @@ public class FragmentBaseListener implements FragmentListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterForStat(@NotNull FragmentParser.ForStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStat(@NotNull FragmentParser.ForStatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBitOrExpr(@NotNull FragmentParser.BitOrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}

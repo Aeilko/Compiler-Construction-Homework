@@ -221,6 +221,18 @@ public interface FragmentListener extends ParseTreeListener {
 	 */
 	void exitFieldExpr(@NotNull FragmentParser.FieldExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code forStat}
+	 * labeled alternative in {@link FragmentParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStat(@NotNull FragmentParser.ForStatContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code forStat}
+	 * labeled alternative in {@link FragmentParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStat(@NotNull FragmentParser.ForStatContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code bitOrExpr}
 	 * labeled alternative in {@link FragmentParser#expr}.
 	 * @param ctx the parse tree

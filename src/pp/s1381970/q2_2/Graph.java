@@ -33,6 +33,7 @@ public class Graph implements Iterable<Node> {
 		}
 		Node result = new Node(this.nodes.size(), id);
 		this.nodes.add(result);
+		this.nodeMap.put(id, result);
 		return result;
 	}
 
