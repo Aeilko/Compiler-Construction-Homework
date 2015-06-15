@@ -1,0 +1,36 @@
+main1:		in 		"Number? " 				=> r_num				// Input 1
+			in 		"Base? " 				=> r_base				// Input 2
+			loadI	#main2					=> r_return				// Pointer to second part of main
+			push	r_return										// Set return value
+			push	r_num											// Push first parameter
+			push	r_base											// Push second parameter
+			jumpI							-> convert1				// Call convert
+main2:		pop								=> r_result				// Load result of convert call
+			out		"Length: ", r_result							// Show result
+			jumpI							-> end
+
+convert1:	pop								=> r_base				// Load second parameter
+			pop								=> r_num				// Load first parameter
+			div		r_num, r_base			=> r_rest				// r_rest = r_base/r_num
+			mult	r_base, r_rest			=> r_out				// r_out = r_base * r_rest
+			sub		r_num, r_out			=> r_out				// r_out = r_num - (r_base * r_rest)
+			out		"Next digit: ", r_out							// Show result
+			loadI	0						=> r_0					// Load 0
+			cmp_EQ	r_0, r_rest				=> r_cmp				// Check if r_rest = 0
+			cbr		r_cmp					-> convert2, convert3	// If/else
+convert2:	pop								=> r_return				// Load and remove return pointer
+			loadI	1						=> r_1					// Load 1
+			push	r_1												// Push return value
+			jump							-> r_return				// Return
+convert3:	loadI	#convert4				=> r_return				// Prepare return pointer for recursive call
+			push	r_return										// Push return pointer
+			push	r_rest											// Push first parameter
+			push	r_base											// Push second parameter
+			jumpI							-> convert1				// Call convert
+convert4:	pop								=> r_result				// Load result of convert call
+			addI	r_result, 1				=> r_result				// Add 1 to the result
+			pop								=> r_return				// Load return pointer
+			push	r_result										// Push return value
+			jump							-> r_return				// Return to correct place
+
+end:		nop
