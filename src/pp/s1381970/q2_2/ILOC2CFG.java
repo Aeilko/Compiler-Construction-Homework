@@ -2,7 +2,9 @@ package pp.s1381970.q2_2;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import pp.iloc.Assembler;
 import pp.iloc.model.Instr;
@@ -50,28 +52,37 @@ public class ILOC2CFG {
 		TreeMap<String, Node> nodes = new TreeMap<String, Node>();
 		Node cur = null;
 		
-		// Create all labels
-		for(Instr line: prog.getInstr()){
-			if(line.hasLabel())
-				nodes.put(line.getLabel().toString(), result.addNode(line.getLabel().toString()));
-		}
+		// Map with edges which have to be created
+		TreeMap<String, ArrayList<String>> edges = new TreeMap<String, ArrayList<String>>();
 		
-		// Add links between labels
+		// Create labels and link them.
 		for(Instr line: prog.getInstr()){
 			if(line.hasLabel()){
-				Node n = nodes.get(line.getLabel().toString());
-				// Check for unreachable code
+				// Line contains a label, so a new node is needed
+				Node n = result.addNode(line.getLabel().toString());
+				nodes.put(line.getLabel().toString(), n);
+				// Create edges map
+				edges.put(line.getLabel().toString(), new ArrayList<String>());
+				
+				// Don't create a link after you past a jump but didn't find a new label
 				if(cur != null){
+					// Add edge from previous node if it didn't pass a jump statement
 					cur.addEdge(n);
 				}
 				cur = n;
 			}
-			
 			Op cmd = line.iterator().next();
 			if(cmd.getOpCode() == OpCode.jumpI){
-				// Check for unreachable code
+				// Don't create a link after you past a jump but didn't find a new label
 				if(cur != null){
-					cur.addEdge(nodes.get(cmd.getArgs().get(0).toString()));
+					// Check if the to-node exists
+					if(nodes.containsKey(cmd.getArgs().get(0).toString())){
+						cur.addEdge(nodes.get(cmd.getArgs().get(0).toString()));
+					}
+					else{
+						// The exit node doesn't exist (yet), make a note to add it later
+						edges.get(cur.getId()).add(cmd.getArgs().get(0).toString());
+					}
 					cur = null;
 				}
 			}
@@ -79,9 +90,67 @@ public class ILOC2CFG {
 			if(cmd.getOpCode() == OpCode.cbr){
 				String l1 = cmd.getArgs().get(1).toString();
 				String l2 = cmd.getArgs().get(2).toString();
-				cur.addEdge(nodes.get(l1));
-				cur.addEdge(nodes.get(l2));
+				
+				// Check if the to-node exists
+				if(nodes.containsKey(l1)){
+					cur.addEdge(nodes.get(l2));
+				}
+				else{
+					// The exit node doesn't exist (yet), make a note to add it later
+					edges.get(cur.getId()).add(l1);
+				}
+				
+				// Check if the to-node exists
+				if(nodes.containsKey(l1)){
+					cur.addEdge(nodes.get(l2));
+				}
+				else{
+					// The exit node doesn't exist (yet), make a note to add it later
+					edges.get(cur.getId()).add(l2);
+				}
 				cur = null;
+			}
+		}
+		
+		// Add edges which couldn't be created in the first place
+		for(String from: edges.keySet()){
+			for(String to: edges.get(from)){
+				nodes.get(from).addEdge(nodes.get(to));
+			}
+		}
+		
+		// Check which nodes are reachable from Node 1
+		String start = prog.getInstr().get(0).getLabel().toString();
+		TreeSet<String> reachable = new TreeSet<String>();
+		reachable.add(start);
+		reachable.addAll(checkNode(nodes.get(start), new ArrayList<String>()));
+		
+		// Create new nodes
+		Graph updatedResult = new Graph();
+		TreeMap<String, Node> updatedNodes = new TreeMap<String, Node>();
+		for(String s: reachable){
+			Node n = updatedResult.addNode(s);
+			updatedNodes.put(s, n);
+		}
+		// Create new edges
+		for(String s: updatedNodes.keySet()){
+			for(Node to: nodes.get(s).getEdges()){
+				if(updatedNodes.containsKey(to.getId()))
+					updatedNodes.get(s).addEdge(to);
+			}
+		}
+		
+		return updatedResult;
+	}
+	
+	// Recursive method
+	private ArrayList<String> checkNode(Node n, ArrayList<String> visited){
+		visited.add(n.getId());
+		ArrayList<String> result = new ArrayList<String>();
+		for(Node to: n.getEdges()){
+			result.add(to.getId());
+			if(!visited.contains(to.getId())){
+				result.addAll(checkNode(to, visited));
 			}
 		}
 		return result;
